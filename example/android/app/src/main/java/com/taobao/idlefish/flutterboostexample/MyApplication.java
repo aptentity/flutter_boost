@@ -2,6 +2,7 @@ package com.taobao.idlefish.flutterboostexample;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.idlefish.flutterboost.BoostChannel;
 import com.idlefish.flutterboost.BoostEngineProvider;
@@ -20,7 +21,7 @@ public class MyApplication extends FlutterApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Log.e("zfl","FlutterBoost.init");
         FlutterBoost.init(new Platform() {
 
             @Override
@@ -43,10 +44,7 @@ public class MyApplication extends FlutterApplication {
                 return new BoostEngineProvider() {
                     @Override
                     public BoostFlutterEngine createEngine(Context context) {
-                        return new BoostFlutterEngine(context, new DartExecutor.DartEntrypoint(
-                                context.getResources().getAssets(),
-                                FlutterMain.findAppBundlePath(context),
-                                "main"), "/");
+                        return new BoostFlutterEngine(context, new DartExecutor.DartEntrypoint(FlutterMain.findAppBundlePath(), "main"),"/");
                     }
                 };
             }
@@ -61,7 +59,7 @@ public class MyApplication extends FlutterApplication {
             @Override
             public void onChannelRegistered(BoostChannel channel) {
                 //platform view register should use FlutterPluginRegistry instread of BoostPluginRegistry
-                TextPlatformViewPlugin.register(FlutterBoost.singleton().engineProvider().tryGetEngine().getPluginRegistry());
+                TextPlatformViewPlugin.register(FlutterBoost.singleton().engineProvider().tryGetEngine().getBoostPluginRegistry());
             }
         });
     }

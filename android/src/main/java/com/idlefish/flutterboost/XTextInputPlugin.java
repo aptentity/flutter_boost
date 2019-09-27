@@ -68,6 +68,11 @@ public class XTextInputPlugin {
             public void clearClient() {
                 clearTextInputClient();
             }
+
+            @Override
+            public void setPlatformViewClient(int i) {
+
+            }
         });
     }
     public void release(){
